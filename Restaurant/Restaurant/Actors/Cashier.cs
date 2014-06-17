@@ -1,9 +1,8 @@
-﻿using System.Linq;
-using System.Collections.Concurrent;
-
-namespace Restaurant
+﻿namespace Restaurant.Actors
 {
+    using System.Collections.Concurrent;
     using System.Collections.Generic;
+    using System.Linq;
 
     public class Cashier : IOrderHandler
     {

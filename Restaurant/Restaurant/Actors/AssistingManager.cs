@@ -1,18 +1,15 @@
-﻿using System.Linq;
-using System.Threading;
-
-namespace Restaurant
+﻿namespace Restaurant.Actors
 {
+    using System.Linq;
+    using System.Threading;
+
     public class AssistingManager : IOrderHandler
     {
-        private readonly IOrderHandler next;
+        private readonly string name;
 
-        private string name;
-
-        public AssistingManager(IOrderHandler next, string name)
+        public AssistingManager(string name)
         {
             this.name = name;
-            this.next = next;
         }
 
         public void Handle(Order order)
@@ -21,13 +18,13 @@ namespace Restaurant
             order.SubTotal = order.Lines.Sum(l => l.Price);
             order.Tax = order.SubTotal * 0.2;
             order.Total = order.SubTotal + order.Tax;
-            next.Handle(order);
+            Dispatcher.Instance.Publish("takepayment", order);
         }
 
         public string Name {
             get
             {
-                return "Assisting Manager";
+                return name;
             }
         }
     }

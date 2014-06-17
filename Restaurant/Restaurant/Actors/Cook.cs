@@ -1,20 +1,18 @@
-﻿using System;
-using System.Threading;
-
-namespace Restaurant
+﻿namespace Restaurant.Actors
 {
+    using System;
+    using System.Threading;
+
     public class Cook : IOrderHandler
     {
-        private readonly IOrderHandler next;
         private static readonly Random Random = new Random();
         private readonly string name;
         private readonly int cookTime;
 
-        public Cook(IOrderHandler next, string name)
+        public Cook(string name)
         {
             cookTime = Random.Next(500);
             this.name = name;
-            this.next = next;
         }
 
         public void Handle(Order order)
@@ -23,7 +21,7 @@ namespace Restaurant
             Thread.Sleep(cookTime);
             order.CookTime = cookTime;
             order.Cook = name;
-            next.Handle(order);
+            Dispatcher.Instance.Publish("assistant", order);
         }
 
 

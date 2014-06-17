@@ -46,9 +46,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AssistingManager.cs" />
-    <Compile Include="Cashier.cs" />
-    <Compile Include="Cook.cs" />
+    <Compile Include="Actors\AssistingManager.cs" />
+    <Compile Include="Actors\Cashier.cs" />
+    <Compile Include="Actors\Cook.cs" />
+    <Compile Include="Dispatcher.cs" />
     <Compile Include="ExceptionHandler.cs" />
     <Compile Include="IHaveTimeToLive.cs" />
     <Compile Include="IOrderHandler.cs" />
@@ -64,7 +65,7 @@
     <Compile Include="BetterDispatcher.cs" />
     <Compile Include="RoundRobinHandler.cs" />
     <Compile Include="TimeToLiveHandler.cs" />
-    <Compile Include="Waiter.cs" />
+    <Compile Include="Actors\Waiter.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
