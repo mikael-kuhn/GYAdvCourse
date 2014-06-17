@@ -8,8 +8,13 @@
     {
         public void Handle(IEvent @event)
         {
+            if (@event is OrderPlaced)
+            {
+                Dispatcher.Instance.Subscribe(@event.CorrelationId, this);
+            }
+
             Console.ForegroundColor = ConsoleColor.Green;
-            Console.WriteLine("Order finished: " + ((OrderEvent)@event).Order.Id);
+            Console.WriteLine("Order event hapened: {0}, corr id {1}", @event.GetType().Name, @event.CorrelationId);
             Console.ResetColor();
         }
         public string Name

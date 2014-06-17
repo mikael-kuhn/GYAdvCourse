@@ -5,9 +5,10 @@ namespace Restaurant.Events
 
     public sealed class OrderPlaced : OrderEvent
     {
-        public OrderPlaced(Order order): base(order)
+        public OrderPlaced(Order order): base(order, Guid.Empty)
         {
             TimeToLive = DateTime.Now.Add(TimeSpan.FromSeconds(5));
+            CorrelationId = new Guid(order.Id);
         }
 
     }

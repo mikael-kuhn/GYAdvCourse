@@ -1,5 +1,6 @@
 ﻿namespace Restaurant.Actors
 {
+    using System;
     using System.Collections.Generic;
 
     using Restaurant.Events;
@@ -17,7 +18,7 @@
             this.waiterName = waiterName;
         }
 
-        public void PlaceOrder(IEnumerable<int> orderItems)
+        public Guid PlaceOrder(IEnumerable<int> orderItems)
         {
             Order order = new Order(string.Empty) { Table = 2, Waiter = waiterName };
             foreach (int orderItem in orderItems)
@@ -25,6 +26,7 @@
                 order.AddLine(menu[orderItem]);
             }
             Dispatcher.Instance.Publish(new OrderPlaced(order));
+            return new Guid(order.Id);
         }
     }
 }

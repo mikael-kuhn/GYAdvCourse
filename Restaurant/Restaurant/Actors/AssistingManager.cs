@@ -21,7 +21,7 @@
             order.SubTotal = order.Lines.Sum(l => l.Price);
             order.Tax = order.SubTotal * 0.2;
             order.Total = order.SubTotal + order.Tax;
-            Dispatcher.Instance.Publish(new OrderPriced(order));
+            Dispatcher.Instance.Publish(new OrderPriced(order, @event.Id) );
         }
 
         public string Name {

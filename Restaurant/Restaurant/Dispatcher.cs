@@ -11,6 +11,8 @@ namespace Restaurant
 
         private readonly Dictionary<Type, List<IEventHandler<IEvent>>> subscriptions =
             new Dictionary<Type, List<IEventHandler<IEvent>>>();
+        private readonly Dictionary<Guid, List<IEventHandler<IEvent>>> subscriptionsByCorrelation =
+            new Dictionary<Guid, List<IEventHandler<IEvent>>>();
 
         private readonly object lockObject = new object();
         public void Subscribe<T>(Type type, IEventHandler<T> handler) where T : IEvent
@@ -25,6 +27,18 @@ namespace Restaurant
             }
         }
 
+        public void Subscribe<T>(Guid correlationId, IEventHandler<T> handler) where T : IEvent
+        {
+            lock (lockObject)
+            {
+                List<IEventHandler<IEvent>> handlers = subscriptionsByCorrelation.ContainsKey(correlationId)
+                                    ? new List<IEventHandler<IEvent>>(subscriptionsByCorrelation[correlationId])
+                                    : new List<IEventHandler<IEvent>>();
+                handlers.Add((IEventHandler<IEvent>)handler);
+                subscriptionsByCorrelation[correlationId] = handlers;
+            }
+        }
+
         public void Publish(IEvent @event)
         {
             if (subscriptions.ContainsKey(@event.GetType()))
@@ -34,10 +48,15 @@ namespace Restaurant
                     handler.Handle(@event);
                 }
             }
-            else
+
+            if (subscriptionsByCorrelation.ContainsKey(@event.CorrelationId))
             {
-                Console.WriteLine("No subscribers found for topic " + @event.GetType().Name);
+                foreach (var handler in subscriptionsByCorrelation[@event.CorrelationId])
+                {
+                    handler.Handle(@event);
+                }
             }
+
         }
     }
 }

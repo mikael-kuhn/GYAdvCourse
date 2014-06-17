@@ -27,10 +27,10 @@ namespace Restaurant
 
             Waiter waiter = new Waiter("Georgie");
 
+            Dispatcher.Instance.Subscribe(typeof(OrderPlaced), printOrderHandler);
             Dispatcher.Instance.Subscribe(typeof(OrderPlaced), betterHandler);
             Dispatcher.Instance.Subscribe(typeof(FoodCooked), assistingManager);
             Dispatcher.Instance.Subscribe(typeof(OrderPriced), cashierProxy);
-            Dispatcher.Instance.Subscribe(typeof(PaymentTaken), printOrderHandler);
 
             IEnumerable<QueuedHandler> allHandlers = new List<QueuedHandler> { betterHandler, cashierProxy, assistingManager, cook1, cook2, cook3, printOrderHandler };
             Monitor monitor = new Monitor(allHandlers);
@@ -41,11 +41,14 @@ namespace Restaurant
                 handler.Start();
             }
 
-            for (int i = 0; i < 1000; i++)
-            {
-                waiter.PlaceOrder(new List<int> { 1, 2 });
-                Thread.Sleep(10);
-            }
+
+            waiter.PlaceOrder(new List<int> { 1, 2 });
+
+            //for (int i = 0; i < 1000; i++)
+            //{
+            //    waiter.PlaceOrder(new List<int> { 1, 2 });
+            //    Thread.Sleep(10);
+            //}
             while (true)
             {
                 foreach (string orderId in ((Cashier)cashier).GetOutstandingOrders())

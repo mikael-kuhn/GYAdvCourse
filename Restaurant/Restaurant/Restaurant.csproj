@@ -56,6 +56,7 @@
     <Compile Include="Events\OrderPlaced.cs" />
     <Compile Include="Handlers\ExceptionHandler.cs" />
     <Compile Include="Handlers\IOrderHandler.cs" />
+    <Compile Include="Handlers\OrderPlacedHandler.cs" />
     <Compile Include="IStartable.cs" />
     <Compile Include="Line.cs" />
     <Compile Include="Monitor.cs" />

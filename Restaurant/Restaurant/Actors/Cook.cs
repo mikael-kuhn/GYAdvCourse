@@ -29,7 +29,7 @@
 
             orderPlacedEvent.Order.CookTime = cookTime;
             orderPlacedEvent.Order.Cook = name;
-            Dispatcher.Instance.Publish(new FoodCooked(orderPlacedEvent.Order));
+            Dispatcher.Instance.Publish(new FoodCooked(orderPlacedEvent.Order, @event.Id));
         }
 
         public string Name
