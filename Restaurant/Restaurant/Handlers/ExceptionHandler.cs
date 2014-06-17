@@ -1,24 +1,21 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Restaurant
+﻿namespace Restaurant.Handlers
 {
+    using System;
     using System.Globalization;
     using System.Threading;
 
-    public sealed class ExceptionHandler : IOrderHandler
-    {
-        private readonly IOrderHandler next;
+    using Restaurant.Events;
 
-        public ExceptionHandler(IOrderHandler next)
+    public sealed class ExceptionHandler : IEventHandler<IEvent>
+    {
+        private readonly IEventHandler<IEvent> next;
+
+        public ExceptionHandler(IEventHandler<IEvent> next)
         {
             this.next = next;
         }
 
-        public void Handle(Order order)
+        public void Handle(IEvent @event)
         {
             int count = 3;
             bool handled = false;
@@ -26,7 +23,7 @@ namespace Restaurant
             {
                 try
                 {
-                    next.Handle(order);
+                    next.Handle(@event);
                     handled = true;
                 }
                 catch (Exception e)
@@ -42,7 +39,7 @@ namespace Restaurant
             {
                 Console.BackgroundColor = ConsoleColor.Red;
                 Console.ForegroundColor = ConsoleColor.White;
-                Console.WriteLine(string.Format(CultureInfo.InvariantCulture, "Dropped order id {0}", order.Id));
+                Console.WriteLine(string.Format(CultureInfo.InvariantCulture, "Dropped order id {0}", ((OrderEvent)@event).Order.Id));
                 Console.ResetColor();
             }
         }

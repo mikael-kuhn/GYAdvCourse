@@ -4,23 +4,25 @@ using System.Linq;
 
 namespace Restaurant
 {
+    using Restaurant.Events;
+
     /// <summary>
     /// Pass work in a round robin fashion
     /// </summary>
-    public class RoundRobinHandler : IOrderHandler
+    public class RoundRobinHandler<T> : IEventHandler<T>
+        where T : IEvent
     {
-        private readonly List<IOrderHandler> handlers;
+        private readonly List<IEventHandler<T>> handlers;
 
-
-        public RoundRobinHandler(IEnumerable<IOrderHandler> handlers)
+        public RoundRobinHandler(IEnumerable<IEventHandler<T>> handlers)
         {
             this.handlers = handlers.ToList();
         }
 
-        public void Handle(Order order)
+        public void Handle(T @event)
         {
-            IOrderHandler handler = handlers[0];
-            handler.Handle(order);
+            IEventHandler<T> handler = handlers[0];
+            handler.Handle(@event);
             handlers.Remove(handler);
             handlers.Add(handler);
         }

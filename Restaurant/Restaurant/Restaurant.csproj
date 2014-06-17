@@ -50,21 +50,26 @@
     <Compile Include="Actors\Cashier.cs" />
     <Compile Include="Actors\Cook.cs" />
     <Compile Include="Dispatcher.cs" />
-    <Compile Include="ExceptionHandler.cs" />
-    <Compile Include="IHaveTimeToLive.cs" />
-    <Compile Include="IOrderHandler.cs" />
+    <Compile Include="Events\Event.cs" />
+    <Compile Include="Events\FoodCooked.cs" />
+    <Compile Include="Events\OrderEvent.cs" />
+    <Compile Include="Events\OrderPlaced.cs" />
+    <Compile Include="Handlers\ExceptionHandler.cs" />
+    <Compile Include="Handlers\IOrderHandler.cs" />
     <Compile Include="IStartable.cs" />
     <Compile Include="Line.cs" />
     <Compile Include="Monitor.cs" />
-    <Compile Include="Multiplexor.cs" />
+    <Compile Include="Handlers\Multiplexor.cs" />
     <Compile Include="Order.cs" />
-    <Compile Include="PrintOrderHandler.cs" />
+    <Compile Include="Events\OrderPriced.cs" />
+    <Compile Include="Events\PaymentTaken.cs" />
+    <Compile Include="Handlers\PrintOrderHandler.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="QueuedHandler.cs" />
+    <Compile Include="Handlers\QueuedHandler.cs" />
     <Compile Include="BetterDispatcher.cs" />
-    <Compile Include="RoundRobinHandler.cs" />
-    <Compile Include="TimeToLiveHandler.cs" />
+    <Compile Include="Handlers\RoundRobinHandler.cs" />
+    <Compile Include="Handlers\TimeToLiveHandler.cs" />
     <Compile Include="Actors\Waiter.cs" />
   </ItemGroup>
   <ItemGroup>

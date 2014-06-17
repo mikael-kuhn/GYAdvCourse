@@ -4,31 +4,35 @@ using System.Linq;
 
 namespace Restaurant
 {
+    using System.Collections;
     using System.Threading;
 
     using Restaurant.Actors;
+    using Restaurant.Events;
+    using Restaurant.Handlers;
 
     class Program
     {
         static void Main(string[] args)
         {
-            PrintOrderHandler printOrderHandler = new PrintOrderHandler();
-            Cashier cashier = new Cashier(printOrderHandler);
+            QueuedHandler printOrderHandler = new QueuedHandler(new PrintOrderHandler());
+            IEventHandler<IEvent> cashier = new Cashier();
             QueuedHandler cashierProxy = new QueuedHandler(cashier);
-            QueuedHandler assistingManager = new QueuedHandler(new AssistingManager("Diana"));
-            QueuedHandler cook1 = new QueuedHandler(new TimeToLiveHandler(new Cook("John")));
-            QueuedHandler cook2 = new QueuedHandler(new TimeToLiveHandler(new Cook("Peter")));
-            QueuedHandler cook3 = new QueuedHandler(new TimeToLiveHandler(new Cook("Gregory")));
+            var assistingManager = new QueuedHandler(new AssistingManager("Diana"));
+            var cook1 = new QueuedHandler(new TimeToLiveHandler(new Cook("John")));
+            var cook2 = new QueuedHandler(new TimeToLiveHandler(new Cook("Peter")));
+            var cook3 = new QueuedHandler(new TimeToLiveHandler(new Cook("Gregory")));
 
             var betterHandler = new QueuedHandler(new TimeToLiveHandler(new BetterDispatcher(new[] { cook1, cook2, cook3 })));
 
             Waiter waiter = new Waiter("Georgie");
 
-            Dispatcher.Instance.Subscribe("cook", betterHandler);
-            Dispatcher.Instance.Subscribe("assistant", assistingManager);
-            Dispatcher.Instance.Subscribe("takepayment", cashierProxy);
+            Dispatcher.Instance.Subscribe(typeof(OrderPlaced), betterHandler);
+            Dispatcher.Instance.Subscribe(typeof(FoodCooked), assistingManager);
+            Dispatcher.Instance.Subscribe(typeof(OrderPriced), cashierProxy);
+            Dispatcher.Instance.Subscribe(typeof(PaymentTaken), printOrderHandler);
 
-            List<QueuedHandler> allHandlers = new List<QueuedHandler> { betterHandler, cashierProxy, assistingManager, cook1, cook2, cook3 };
+            IEnumerable<QueuedHandler> allHandlers = new List<QueuedHandler> { betterHandler, cashierProxy, assistingManager, cook1, cook2, cook3, printOrderHandler };
             Monitor monitor = new Monitor(allHandlers);
             monitor.Start();
 
@@ -44,10 +48,10 @@ namespace Restaurant
             }
             while (true)
             {
-                foreach (string orderId in cashier.GetOutstandingOrders())
+                foreach (string orderId in ((Cashier)cashier).GetOutstandingOrders())
                 {
                     Console.WriteLine("Got outstanding order to pay, id " + orderId);
-                    cashier.Pay(orderId, "123456");
+                    ((Cashier)cashier).Pay(orderId, "123456");
                 }
                 Thread.Sleep(1);
             }

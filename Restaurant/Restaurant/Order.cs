@@ -10,7 +10,7 @@ namespace Restaurant
 {
     using Newtonsoft.Json.Linq;
 
-    public class Order : IHaveTimeToLive
+    public class Order
     {
         private readonly JObject innerInstance;
 

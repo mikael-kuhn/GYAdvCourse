@@ -5,11 +5,14 @@ using System.Threading;
 
 namespace Restaurant
 {
+    using Restaurant.Events;
+    using Restaurant.Handlers;
+
     /// <summary>
     /// Distributes the work according to how much work the actor (handler) already has, ie. the message queue in front of the 
     /// actor
     /// </summary>
-    public class BetterDispatcher : IOrderHandler
+    public class BetterDispatcher : IEventHandler<IEvent>
     {
         private readonly List<QueuedHandler> nextHandlers;
 
@@ -18,19 +21,19 @@ namespace Restaurant
             this.nextHandlers = nextHandlers.ToList();
         }
 
-        public void Handle(Order order)
+        public void Handle(IEvent @event)
         {
             bool dispatched = false;
             while (!dispatched)
             {
-                QueuedHandler nextHandler = nextHandlers.Where(x => x.MessageCount < 5).OrderBy(x => x.MessageCount).FirstOrDefault();
+                var nextHandler = nextHandlers.Where(x => x.MessageCount < 5).OrderBy(x => x.MessageCount).FirstOrDefault();
                 if (nextHandler == null)
                 {
                     Thread.Sleep(50);
                 }
                 else
                 {
-                    nextHandler.Handle(order);
+                    nextHandler.Handle(@event);
                     dispatched = true;
                 }
             }

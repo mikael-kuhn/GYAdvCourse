@@ -1,25 +1,27 @@
-﻿using System.Threading;
-using System.Collections.Concurrent;
-
-namespace Restaurant
+﻿namespace Restaurant.Handlers
 {
+    using System.Collections.Concurrent;
+    using System.Threading;
+
+    using Restaurant.Events;
+
     /// <summary>
     /// Put a queue in front of the actor (handler)
     /// </summary>
-    public class QueuedHandler : IOrderHandler, IStartable
+    public class QueuedHandler : IEventHandler<IEvent>, IStartable
     {
-        private readonly IOrderHandler handler;
-        private readonly ConcurrentQueue<Order> queue = new ConcurrentQueue<Order>();
+        private readonly IEventHandler<IEvent> handler;
+        private readonly ConcurrentQueue<IEvent> queue = new ConcurrentQueue<IEvent>();
 
         private void GetMessage()
         {
             while (true)
             {
-                Order order;
-                if (queue.TryDequeue(out order))
+                IEvent @event;
+                if (queue.TryDequeue(out @event))
                 {
                     //Console.WriteLine("Got an order to handle by " + handler.GetType().Name);
-                    handler.Handle(order);
+                    handler.Handle(@event);
                 }
                 else
                 {
@@ -28,7 +30,7 @@ namespace Restaurant
             }
         }
 
-        public QueuedHandler(IOrderHandler handler)
+        public QueuedHandler(IEventHandler<IEvent> handler)
         {
             this.handler = handler;
         }
@@ -39,9 +41,9 @@ namespace Restaurant
             thread.Start();
         }
 
-        public void Handle(Order order)
+        public void Handle(IEvent @event)
         {
-            queue.Enqueue(order);
+            queue.Enqueue(@event);
         }
 
         public string Name {

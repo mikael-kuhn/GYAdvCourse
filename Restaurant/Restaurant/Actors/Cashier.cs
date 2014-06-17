@@ -4,20 +4,21 @@
     using System.Collections.Generic;
     using System.Linq;
 
-    public class Cashier : IOrderHandler
-    {
-        private readonly IOrderHandler next;
+    using Restaurant.Events;
 
+    public class Cashier : IEventHandler<IEvent>
+    {
         private readonly ConcurrentDictionary<string, Order> outstandingOrders;
 
-        public Cashier(IOrderHandler next)
+        public Cashier()
         {
-            this.next = next;
             outstandingOrders = new ConcurrentDictionary<string, Order>();
         }
 
-        public void Handle(Order order)
+        public void Handle(IEvent @event)
         {
+            var orderPricedEvent = (OrderPriced)@event;
+            Order order = orderPricedEvent.Order;
             outstandingOrders.AddOrUpdate(order.Id, order, (key, o) => o);
         }
 
@@ -26,14 +27,13 @@
             Order order;
             outstandingOrders.TryRemove(id, out order);
             order.Card = card;
-            next.Handle(order);
+            Dispatcher.Instance.Publish(new PaymentTaken(order));
         }
 
         public IEnumerable<string> GetOutstandingOrders()
         {
             return outstandingOrders.Values.Select(o => o.Id);
         }
-
 
         public string Name
         {

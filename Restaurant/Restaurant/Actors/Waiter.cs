@@ -2,6 +2,8 @@
 {
     using System.Collections.Generic;
 
+    using Restaurant.Events;
+
     public class Waiter
     {
         private readonly string waiterName;
@@ -22,7 +24,7 @@
             {
                 order.AddLine(menu[orderItem]);
             }
-            Dispatcher.Instance.Publish("cook", order);
+            Dispatcher.Instance.Publish(new OrderPlaced(order));
         }
     }
 }

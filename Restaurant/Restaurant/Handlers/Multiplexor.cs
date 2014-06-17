@@ -3,6 +3,7 @@ using System.Collections.Generic;
 
 namespace Restaurant
 {
+    /*
     /// <summary>
     /// Pass the same order to all the next actors
     /// </summary>
@@ -32,4 +33,5 @@ namespace Restaurant
         }
 
     }
+     * */
 }
