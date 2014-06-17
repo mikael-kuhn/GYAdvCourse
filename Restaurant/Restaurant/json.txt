@@ -1,0 +1,16 @@
+﻿{
+"waiter": "Georgie",
+"table": 2,
+"cookTime": 5,
+"tax": 2.00
+"subTotal": 10.00
+"total": 12.00,
+"lines": [
+	{ 
+		"name": "razor blades special",
+		"price": 2.99,
+		"ingredients": "wazor blades, hamburger, ice cream, pickles"
+	}
+	],
+"card": "123456"
+}
