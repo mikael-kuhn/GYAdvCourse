@@ -61,6 +61,18 @@ namespace Restaurant
             }
         }
 
+        public string Cook
+        {
+            get
+            {
+                return innerInstance["cook"].ToString();
+            }
+            set
+            {
+                innerInstance["cook"] = value;
+            }
+        }
+
         public int Table
         {
             get

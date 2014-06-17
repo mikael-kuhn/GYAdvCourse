@@ -24,6 +24,7 @@ namespace Restaurant
         {
             Thread.Sleep(500);
             order.CookTime = 5000;
+            order.Cook = name;
             next.Handle(order);
         }
     }

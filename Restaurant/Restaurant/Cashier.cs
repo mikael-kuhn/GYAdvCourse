@@ -1,4 +1,5 @@
 ﻿using System.Linq;
+using System.Collections.Concurrent;
 
 namespace Restaurant
 {
@@ -8,29 +9,30 @@ namespace Restaurant
     {
         private readonly IOrderHandler next;
 
-        private readonly List<Order> outstandingOrders;
+        private readonly ConcurrentDictionary<string, Order> outstandingOrders;
 
         public Cashier(IOrderHandler next)
         {
             this.next = next;
-            outstandingOrders = new List<Order>();
+            outstandingOrders = new ConcurrentDictionary<string, Order>();
         }
 
         public void Handle(Order order)
         {
-            outstandingOrders.Add(order);
+            outstandingOrders.AddOrUpdate(order.Id, order, (key, o) => o);
         }
 
         public void Pay(string id, string card)
         {
-            Order order = outstandingOrders.First(o => o.Id == id);
+            Order order;
+            outstandingOrders.TryRemove(id, out order);
             order.Card = card;
             next.Handle(order);
         }
 
         public IEnumerable<string> GetOutstandingOrders()
         {
-            return outstandingOrders.Select(o => o.Id);
+            return outstandingOrders.Values.Select(o => o.Id);
         }
     }
 }

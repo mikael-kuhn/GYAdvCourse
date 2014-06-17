@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 
 namespace Restaurant
 {
@@ -10,9 +6,9 @@ namespace Restaurant
     {
         private readonly IOrderHandler orderHandler;
 
-        private string waiterName;
+        private readonly string waiterName;
 
-        private Dictionary<int, Line> menu = new Dictionary<int, Line> { 
+        private readonly Dictionary<int, Line> menu = new Dictionary<int, Line> { 
         { 1, new Line("razor blades special", "razor blades, hamburger", 2.99) },
         { 2, new Line("icecream", "vanilla icecream", 1.00) }};
 
