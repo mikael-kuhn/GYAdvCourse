@@ -34,5 +34,14 @@ namespace Restaurant
         {
             return outstandingOrders.Values.Select(o => o.Id);
         }
+
+
+        public string Name
+        {
+            get
+            {
+                return "Cashier";
+            }
+        }
     }
 }

@@ -22,14 +22,19 @@ namespace Restaurant
 
             Waiter waiter = new Waiter(roundRobinHandler, "Georgie");
 
-            List<IStartable> allHandlers = new List<IStartable> { cashierProxy, assistingManager, cook1, cook2, cook3 };
+            List<QueuedHandler> allHandlers = new List<QueuedHandler> { cashierProxy, assistingManager, cook1, cook2, cook3 };
+            Monitor monitor = new Monitor(allHandlers);
+            monitor.Start();
+
             foreach (IStartable handler in allHandlers)
             {
                 handler.Start();
             }
 
-            waiter.PlaceOrder(new List<int> { 1, 2 });
-            waiter.PlaceOrder(new List<int> { 1, 2 });
+            for (int i = 0; i < 200; i++)
+            {
+                waiter.PlaceOrder(new List<int> { 1, 2 });
+            }
             while (true)
             {
                 foreach (string orderId in cashier.GetOutstandingOrders())

@@ -12,5 +12,13 @@ namespace Restaurant
         {
             Console.WriteLine(order.ToString());
         }
+        public string Name
+        {
+            get
+            {
+                return String.Empty;
+            }
+        }
+
     }
 }

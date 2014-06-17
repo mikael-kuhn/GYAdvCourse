@@ -42,5 +42,20 @@ namespace Restaurant
         {
             queue.Enqueue(order);
         }
+
+        public string Name {
+            get
+            {
+                return handler.GetType().Name + " " + handler.Name;
+            }
+        }
+
+        public int MessageCount
+        {
+            get
+            {
+                return queue.Count;
+            }
+        }
     }
 }

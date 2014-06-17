@@ -23,5 +23,14 @@ namespace Restaurant
             _handlers.Remove(handler);
             _handlers.Add(handler);
         }
+
+        public string Name
+        {
+            get
+            {
+                return String.Empty;
+            }
+        }
+
     }
 }

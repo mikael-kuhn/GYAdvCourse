@@ -1,6 +1,7 @@
 ﻿
 namespace Restaurant
 {
+    using System;
     using System.Collections.Generic;
 
     public class Multiplexor : IOrderHandler
@@ -19,5 +20,14 @@ namespace Restaurant
                 handler.Handle(order);
             }
         }
+
+        public string Name
+        {
+            get
+            {
+                return String.Empty;
+            }
+        }
+
     }
 }

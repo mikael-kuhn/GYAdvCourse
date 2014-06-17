@@ -9,5 +9,7 @@ namespace Restaurant
     public interface IOrderHandler
     {
         void Handle(Order order);
+
+        string Name { get; }
     }
 }

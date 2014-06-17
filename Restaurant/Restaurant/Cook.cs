@@ -12,20 +12,29 @@ namespace Restaurant
     {
         private readonly IOrderHandler next;
 
+        private static Random random = new Random();
         private string name;
-
+        private int cookTime;
         public Cook(IOrderHandler next, string name)
         {
+            cookTime = random.Next(500);
             this.name = name;
             this.next = next;
         }
 
         public void Handle(Order order)
         {
-            Thread.Sleep(500);
-            order.CookTime = 5000;
+            
+            Thread.Sleep(cookTime);
+            order.CookTime = cookTime;
             order.Cook = name;
             next.Handle(order);
+        }
+
+
+        public string Name
+        {
+            get { return name; }
         }
     }
 }

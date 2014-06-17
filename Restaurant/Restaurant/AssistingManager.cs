@@ -28,6 +28,13 @@ namespace Restaurant
             order.Total = order.SubTotal + order.Tax;
             next.Handle(order);
         }
+
+        public string Name {
+            get
+            {
+                return "Assisting Manager";
+            }
+        }
     }
 
 }

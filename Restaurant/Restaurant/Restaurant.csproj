@@ -48,10 +48,12 @@
   <ItemGroup>
     <Compile Include="AssistingManager.cs" />
     <Compile Include="Cashier.cs" />
+    <Compile Include="consoleExtensions.cs" />
     <Compile Include="Cook.cs" />
     <Compile Include="IOrderHandler.cs" />
     <Compile Include="IStartable.cs" />
     <Compile Include="Line.cs" />
+    <Compile Include="Monitor.cs" />
     <Compile Include="Multiplexor.cs" />
     <Compile Include="Order.cs" />
     <Compile Include="PrintOrderHandler.cs" />
