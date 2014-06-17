@@ -18,11 +18,11 @@ namespace Restaurant
             QueuedHandler cook2 = new QueuedHandler(new Cook(assistingManager, "Peter"));
             QueuedHandler cook3 = new QueuedHandler(new Cook(assistingManager, "Gregory"));
 
-            RoundRobinHandler roundRobinHandler = new RoundRobinHandler(new[] { cook1, cook2, cook3 });
+            var betterHandler = new QueuedHandler(new BetterDispatcher(new[] { cook1, cook2, cook3 }));
 
-            Waiter waiter = new Waiter(roundRobinHandler, "Georgie");
+            Waiter waiter = new Waiter(betterHandler, "Georgie");
 
-            List<QueuedHandler> allHandlers = new List<QueuedHandler> { cashierProxy, assistingManager, cook1, cook2, cook3 };
+            List<QueuedHandler> allHandlers = new List<QueuedHandler> { betterHandler, cashierProxy, assistingManager, cook1, cook2, cook3 };
             Monitor monitor = new Monitor(allHandlers);
             monitor.Start();
 

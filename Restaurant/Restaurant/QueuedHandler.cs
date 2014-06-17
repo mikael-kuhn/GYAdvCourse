@@ -17,7 +17,7 @@ namespace Restaurant
             {
                 if (queue.TryDequeue(out order))
                 {
-                    Console.WriteLine("Got an order to handle by " + handler.GetType().Name);
+                    //Console.WriteLine("Got an order to handle by " + handler.GetType().Name);
                     handler.Handle(order);
                 }
                 else

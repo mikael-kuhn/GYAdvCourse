@@ -60,6 +60,7 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="QueuedHandler.cs" />
+    <Compile Include="QueueRoundRobinHandler.cs" />
     <Compile Include="RoundRobinHandler.cs" />
     <Compile Include="Waiter.cs" />
   </ItemGroup>
