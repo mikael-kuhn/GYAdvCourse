@@ -8,7 +8,6 @@ namespace Restaurant.Events
         public OrderPlaced(Order order): base(order, Guid.Empty)
         {
             TimeToLive = DateTime.Now.Add(TimeSpan.FromSeconds(5));
-            CorrelationId = new Guid(order.Id);
         }
 
     }
