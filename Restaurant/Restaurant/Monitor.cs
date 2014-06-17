@@ -35,7 +35,7 @@ namespace Restaurant
                     Console.WriteLine(string.Format(CultureInfo.InvariantCulture, "{0}, Count: {1}", name, count));
                 }
                 Console.ResetColor();
-                Thread.Sleep(1000);
+                Thread.Sleep(500);
             }
         }
     }

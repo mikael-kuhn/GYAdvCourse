@@ -1,21 +1,23 @@
-﻿
+﻿using System;
+using System.Collections.Generic;
+
 namespace Restaurant
 {
-    using System;
-    using System.Collections.Generic;
-
+    /// <summary>
+    /// Pass the same order to all the next actors
+    /// </summary>
     public class Multiplexor : IOrderHandler
     {
-        private readonly IEnumerable<IOrderHandler> _handlers;
+        private readonly IEnumerable<IOrderHandler> nextHandlers;
 
-        public Multiplexor(IEnumerable<IOrderHandler> handlers)
+        public Multiplexor(IEnumerable<IOrderHandler> nextHandlers)
         {
-            _handlers = handlers;
+            this.nextHandlers = nextHandlers;
         }
 
         public void Handle(Order order)
         {
-            foreach (var handler in _handlers)
+            foreach (var handler in nextHandlers)
             {
                 handler.Handle(order);
             }

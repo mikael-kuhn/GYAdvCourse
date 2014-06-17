@@ -14,11 +14,11 @@ namespace Restaurant
             Cashier cashier = new Cashier(printOrderHandler);
             QueuedHandler cashierProxy = new QueuedHandler(cashier);
             QueuedHandler assistingManager = new QueuedHandler(new AssistingManager(cashierProxy, "Diana"));
-            QueuedHandler cook1 = new QueuedHandler(new Cook(assistingManager, "John"));
-            QueuedHandler cook2 = new QueuedHandler(new Cook(assistingManager, "Peter"));
-            QueuedHandler cook3 = new QueuedHandler(new Cook(assistingManager, "Gregory"));
+            QueuedHandler cook1 = new QueuedHandler(new TimeToLiveHandler(new Cook(assistingManager, "John")));
+            QueuedHandler cook2 = new QueuedHandler(new TimeToLiveHandler(new Cook(assistingManager, "Peter")));
+            QueuedHandler cook3 = new QueuedHandler(new TimeToLiveHandler(new Cook(assistingManager, "Gregory")));
 
-            var betterHandler = new QueuedHandler(new BetterDispatcher(new[] { cook1, cook2, cook3 }));
+            var betterHandler = new QueuedHandler(new TimeToLiveHandler(new BetterDispatcher(new[] { cook1, cook2, cook3 })));
 
             Waiter waiter = new Waiter(betterHandler, "Georgie");
 
@@ -31,9 +31,10 @@ namespace Restaurant
                 handler.Start();
             }
 
-            for (int i = 0; i < 200; i++)
+            for (int i = 0; i < 1000; i++)
             {
                 waiter.PlaceOrder(new List<int> { 1, 2 });
+                Thread.Sleep(10);
             }
             while (true)
             {

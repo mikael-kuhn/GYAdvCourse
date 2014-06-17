@@ -1,10 +1,11 @@
-﻿using System;
-using System.Threading;
+﻿using System.Threading;
+using System.Collections.Concurrent;
 
 namespace Restaurant
 {
-    using System.Collections.Concurrent;
-
+    /// <summary>
+    /// Put a queue in front of the actor (handler)
+    /// </summary>
     public class QueuedHandler : IOrderHandler, IStartable
     {
         private readonly IOrderHandler handler;
@@ -12,9 +13,9 @@ namespace Restaurant
 
         private void GetMessage()
         {
-            Order order;
             while (true)
             {
+                Order order;
                 if (queue.TryDequeue(out order))
                 {
                     //Console.WriteLine("Got an order to handle by " + handler.GetType().Name);

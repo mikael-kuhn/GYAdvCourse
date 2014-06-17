@@ -1,27 +1,28 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Restaurant
 {
+    /// <summary>
+    /// Pass work in a round robin fashion
+    /// </summary>
     public class RoundRobinHandler : IOrderHandler
     {
-        private readonly List<IOrderHandler> _handlers;
+        private readonly List<IOrderHandler> handlers;
 
 
         public RoundRobinHandler(IEnumerable<IOrderHandler> handlers)
         {
-            _handlers = handlers.ToList();
+            this.handlers = handlers.ToList();
         }
 
         public void Handle(Order order)
         {
-            IOrderHandler handler = _handlers[0];
+            IOrderHandler handler = handlers[0];
             handler.Handle(order);
-            _handlers.Remove(handler);
-            _handlers.Add(handler);
+            handlers.Remove(handler);
+            handlers.Add(handler);
         }
 
         public string Name

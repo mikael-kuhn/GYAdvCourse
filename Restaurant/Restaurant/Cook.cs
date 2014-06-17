@@ -1,23 +1,18 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Threading;
 
 namespace Restaurant
 {
-    using System.Threading;
-
     public class Cook : IOrderHandler
     {
         private readonly IOrderHandler next;
+        private static readonly Random Random = new Random();
+        private readonly string name;
+        private readonly int cookTime;
 
-        private static Random random = new Random();
-        private string name;
-        private int cookTime;
         public Cook(IOrderHandler next, string name)
         {
-            cookTime = random.Next(500);
+            cookTime = Random.Next(500);
             this.name = name;
             this.next = next;
         }

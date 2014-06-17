@@ -10,12 +10,14 @@ namespace Restaurant
 {
     using Newtonsoft.Json.Linq;
 
-    public class Order
+    public class Order : IHaveTimeToLive
     {
         private readonly JObject innerInstance;
 
         public Order(string json)
         {
+            var d1 = DateTime.Now;
+            TimeToLive = d1.Add(TimeSpan.FromSeconds(5));
             if (string.IsNullOrEmpty(json))
             {
                 innerInstance = new JObject();
@@ -165,6 +167,12 @@ namespace Restaurant
         {
             lines.Add(line);
             innerInstance["lines"] = new JArray(JsonConvert.SerializeObject(lines));
+        }
+
+        public DateTime TimeToLive
+        {
+            get;
+            set;
         }
     }
 }

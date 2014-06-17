@@ -1,19 +1,21 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Threading;
 
 namespace Restaurant
 {
-    using System.Threading;
-
+    /// <summary>
+    /// Distributes the work according to how much work the actor (handler) already has, ie. the message queue in front of the 
+    /// actor
+    /// </summary>
     public class BetterDispatcher : IOrderHandler
     {
-        private readonly List<QueuedHandler> handlers;
-        public BetterDispatcher(IEnumerable<QueuedHandler> handlers)
+        private readonly List<QueuedHandler> nextHandlers;
+
+        public BetterDispatcher(IEnumerable<QueuedHandler> nextHandlers)
         {
-            this.handlers = handlers.ToList();
+            this.nextHandlers = nextHandlers.ToList();
         }
 
         public void Handle(Order order)
@@ -21,14 +23,14 @@ namespace Restaurant
             bool dispatched = false;
             while (!dispatched)
             {
-                var handler = handlers.Where(x => x.MessageCount < 5).OrderBy(x => x.MessageCount).FirstOrDefault();
-                if (handler == null)
+                QueuedHandler nextHandler = nextHandlers.Where(x => x.MessageCount < 5).OrderBy(x => x.MessageCount).FirstOrDefault();
+                if (nextHandler == null)
                 {
                     Thread.Sleep(50);
                 }
                 else
                 {
-                    handler.Handle(order);
+                    nextHandler.Handle(order);
                     dispatched = true;
                 }
             }
