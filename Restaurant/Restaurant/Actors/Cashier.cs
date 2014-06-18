@@ -5,6 +5,7 @@
     using System.Collections.Generic;
     using System.Linq;
 
+    using Restaurant.Commands;
     using Restaurant.Events;
 
     public class Cashier : IEventHandler<IEvent>
@@ -18,7 +19,7 @@
 
         public void Handle(IEvent @event)
         {
-            var orderPricedEvent = (OrderPriced)@event;
+            var orderPricedEvent = (TakePayment)@event;
             Order order = orderPricedEvent.Order;
             outstandingOrders.AddOrUpdate(order.Id, new Tuple<Order, Guid>(order, @event.Id), (key, o) => o);
         }

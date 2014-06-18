@@ -3,6 +3,7 @@
     using System;
     using System.Threading;
 
+    using Restaurant.Commands;
     using Restaurant.Events;
 
     public class Cook : IEventHandler<IEvent>
@@ -21,7 +22,7 @@
         {
             Thread.Sleep(cookTime);
 
-            var orderPlacedEvent = (OrderPlaced)@event;
+            var orderPlacedEvent = (CookFood)@event;
 
             Console.ForegroundColor = ConsoleColor.DarkMagenta;
             Console.WriteLine("Order cooked " + orderPlacedEvent.Order.Id);

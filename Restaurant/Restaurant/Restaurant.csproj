@@ -49,6 +49,10 @@
     <Compile Include="Actors\AssistingManager.cs" />
     <Compile Include="Actors\Cashier.cs" />
     <Compile Include="Actors\Cook.cs" />
+    <Compile Include="Commands\CookFood.cs" />
+    <Compile Include="Commands\PriceOrder.cs" />
+    <Compile Include="Commands\PrintOrder.cs" />
+    <Compile Include="Commands\TakePayment.cs" />
     <Compile Include="Dispatcher.cs" />
     <Compile Include="Events\Event.cs" />
     <Compile Include="Events\FoodCooked.cs" />
@@ -57,8 +61,13 @@
     <Compile Include="Handlers\ExceptionHandler.cs" />
     <Compile Include="Handlers\IOrderHandler.cs" />
     <Compile Include="Handlers\OrderPlacedHandler.cs" />
+    <Compile Include="IDispatcher.cs" />
+    <Compile Include="IGetStartedBy.cs" />
+    <Compile Include="IMidget.cs" />
     <Compile Include="IStartable.cs" />
     <Compile Include="Line.cs" />
+    <Compile Include="OrderMidget.cs" />
+    <Compile Include="MidgetHouse.cs" />
     <Compile Include="Monitor.cs" />
     <Compile Include="Handlers\Multiplexor.cs" />
     <Compile Include="Order.cs" />

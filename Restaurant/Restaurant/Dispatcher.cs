@@ -5,7 +5,7 @@ namespace Restaurant
 {
     using Restaurant.Events;
 
-    public sealed class Dispatcher
+    public sealed class Dispatcher : IDispatcher
     {
         public static readonly Dispatcher Instance = new Dispatcher();
 
@@ -41,6 +41,11 @@ namespace Restaurant
 
         public void Publish(IEvent @event)
         {
+            //Console.WriteLine(
+            //    "Publishing event {0} with corrlation id {1}",
+            //    @event.GetType().Name,
+            //    @event.CorrelationId);
+
             if (subscriptions.ContainsKey(@event.GetType()))
             {
                 foreach (var handler in subscriptions[@event.GetType()])

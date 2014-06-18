@@ -3,6 +3,7 @@
     using System.Linq;
     using System.Threading;
 
+    using Restaurant.Commands;
     using Restaurant.Events;
 
     public class AssistingManager : IEventHandler<IEvent>
@@ -17,7 +18,7 @@
         public void Handle(IEvent @event)
         {
             Thread.Sleep(100);
-            Order order = ((FoodCooked)@event).Order;
+            Order order = ((PriceOrder)@event).Order;
             order.SubTotal = order.Lines.Sum(l => l.Price);
             order.Tax = order.SubTotal * 0.2;
             order.Total = order.SubTotal + order.Tax;
