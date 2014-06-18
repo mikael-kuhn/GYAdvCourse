@@ -30,15 +30,21 @@ namespace Restaurant
             var house = new MidgetHouse(Dispatcher.Instance);
             var houseQueue = new QueuedHandler(house);
 
+            var clock = new AlarmClock();
+
             Dispatcher.Instance.Subscribe(typeof(OrderPlaced), houseQueue);
             Dispatcher.Instance.Subscribe(typeof(FoodCooked), houseQueue);
             Dispatcher.Instance.Subscribe(typeof(OrderPriced), houseQueue);
             Dispatcher.Instance.Subscribe(typeof(PaymentTaken), houseQueue);
+            Dispatcher.Instance.Subscribe(typeof(FirstCookRetry), houseQueue);
+            Dispatcher.Instance.Subscribe(typeof(SecondCookRetry), houseQueue);
 
             Dispatcher.Instance.Subscribe(typeof(CookFood), betterHandler);
             Dispatcher.Instance.Subscribe(typeof(PriceOrder), assistingManager);
             Dispatcher.Instance.Subscribe(typeof(TakePayment), cashierProxy);
             Dispatcher.Instance.Subscribe(typeof(PrintOrder), printOrderHandler);
+
+            Dispatcher.Instance.Subscribe(typeof(SendToMeIn), clock);
 
             IEnumerable<QueuedHandler> allHandlers = new List<QueuedHandler> { houseQueue, betterHandler, cashierProxy, assistingManager, cook1, cook2, cook3, printOrderHandler };
             Monitor monitor = new Monitor(allHandlers, new [] {house});
@@ -48,12 +54,13 @@ namespace Restaurant
             {
                 handler.Start();
             }
+            clock.Start();
             //waiter.PlaceOrder(new List<int> { 1, 2 });
 
             for (int i = 0; i < 1000; i++)
             {
                 waiter.PlaceOrder(new List<int> { 1, 2 });
-                Thread.Sleep(10);
+                Thread.Sleep(50);
             }
             while (true)
             {

@@ -46,12 +46,16 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Actors\AlarmClock.cs" />
     <Compile Include="Actors\AssistingManager.cs" />
     <Compile Include="Actors\Cashier.cs" />
     <Compile Include="Actors\Cook.cs" />
+    <Compile Include="Actors\SendToMeIn.cs" />
     <Compile Include="Commands\CookFood.cs" />
+    <Compile Include="Commands\FirstCookRetry.cs" />
     <Compile Include="Commands\PriceOrder.cs" />
     <Compile Include="Commands\PrintOrder.cs" />
+    <Compile Include="Commands\SecondCookRetry.cs" />
     <Compile Include="Commands\TakePayment.cs" />
     <Compile Include="Dispatcher.cs" />
     <Compile Include="Events\Event.cs" />

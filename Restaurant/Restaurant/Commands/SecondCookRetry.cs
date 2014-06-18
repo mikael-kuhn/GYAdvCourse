@@ -1,14 +1,14 @@
 ﻿namespace Restaurant.Commands
 {
     using System;
+
     using Restaurant.Events;
 
-    public class CookFood : OrderEvent
+    public class SecondCookRetry : OrderEvent
     {
-        public CookFood(Order order, Guid causationId)
+        public SecondCookRetry(Order order, Guid causationId)
             : base(order, causationId)
         {
-            TimeToLive = DateTime.Now.Add(TimeSpan.FromSeconds(1));
         }
     }
 }
