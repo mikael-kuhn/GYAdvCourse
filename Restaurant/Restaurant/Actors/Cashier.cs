@@ -22,6 +22,7 @@
             var orderPricedEvent = (TakePayment)@event;
             Order order = orderPricedEvent.Order;
             outstandingOrders.AddOrUpdate(order.Id, new Tuple<Order, Guid>(order, @event.Id), (key, o) => o);
+            Pay(order.Id, "123123");
         }
 
         public void Pay(string id, string card)

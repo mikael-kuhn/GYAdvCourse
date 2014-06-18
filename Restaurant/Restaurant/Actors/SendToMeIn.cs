@@ -15,7 +15,7 @@ namespace Restaurant.Actors
 
         public IEvent WhatToSend { get; private set; }
 
-        public DateTime WhenToSend { get; private set; }
+        public DateTime WhenToSend { get; set; }
 
         public DateTime? TimeToLive { get; set; }
 

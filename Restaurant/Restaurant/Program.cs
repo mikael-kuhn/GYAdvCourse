@@ -16,6 +16,11 @@ namespace Restaurant
     {
         static void Main(string[] args)
         {
+            
+            var es = new AtomDispatcher();
+            es.Start("az");
+            // es.PostMessage(new OrderPlaced(order), "az");
+
             QueuedHandler printOrderHandler = new QueuedHandler(new PrintOrderHandler());
             IEventHandler<IEvent> cashier = new Cashier();
             QueuedHandler cashierProxy = new QueuedHandler(cashier);
@@ -24,8 +29,9 @@ namespace Restaurant
             var cook2 = new QueuedHandler(new TimeToLiveHandler(new Cook("Peter")));
             var cook3 = new QueuedHandler(new TimeToLiveHandler(new Cook("Gregory")));
 
-            var betterHandler = new QueuedHandler(new TimeToLiveHandler(new BetterDispatcher(new[] { cook1, cook2, cook3 })));
+            var betterHandler = new QueuedHandler(new Dropper(new TimeToLiveHandler(new BetterDispatcher(new[] { cook1, cook2, cook3 }))));
 
+            TelephoneOperator telephoneOperator = new TelephoneOperator("PhoneMan");
             Waiter waiter = new Waiter("Georgie");
             var house = new MidgetHouse(Dispatcher.Instance);
             var houseQueue = new QueuedHandler(house);
@@ -56,10 +62,18 @@ namespace Restaurant
             }
             clock.Start();
             //waiter.PlaceOrder(new List<int> { 1, 2 });
+            //telephoneOperator.PlaceOrder(new List<int> { 1, 2 });
+
+            return;
 
             for (int i = 0; i < 1000; i++)
             {
                 waiter.PlaceOrder(new List<int> { 1, 2 });
+                if (i % 3 == 0)
+                {
+                    Thread.Sleep(50);
+                    telephoneOperator.PlaceOrder(new List<int> { 1, 2 });
+                }
                 Thread.Sleep(50);
             }
             while (true)

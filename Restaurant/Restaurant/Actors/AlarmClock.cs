@@ -18,6 +18,10 @@
                 var e = @event as SendToMeIn;
                 if (e != null)
                 {
+                    while (alarms.ContainsKey(e.WhenToSend))
+                    {
+                        e.WhenToSend = e.WhenToSend.AddMilliseconds(1);
+                    }
                     alarms.Add(e.WhenToSend, e.WhatToSend);
                 }
             }

@@ -20,8 +20,10 @@
         public void Start(OrderPlaced @event)
         {
             var id = new Guid(@event.Order.Id);
-            dynamic midget = new OrderMidget(id, dispatcher);
-            ((IMidget)midget).OnCompleted += MidgetCompleted;
+            IMidget midget = @event.Order.IsDodgy
+                                 ? (IMidget)new DodgyOrderMidget(id, dispatcher)
+                                 : new OrderMidget(id, dispatcher);
+            midget.OnCompleted += MidgetCompleted;
             midgets.Add(id, midget);
         }
 

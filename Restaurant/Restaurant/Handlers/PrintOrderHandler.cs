@@ -13,8 +13,13 @@
                 Dispatcher.Instance.Subscribe(@event.CorrelationId, this);
             }
 
-            Console.ForegroundColor = ConsoleColor.Green;
-            Console.WriteLine("Order event hapened: {0}, corr id {1}", @event.GetType().Name, @event.CorrelationId);
+            if (((OrderEvent)@event).Order.IsDodgy)
+            {
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.Write("DODGY ");
+            }
+            Console.ForegroundColor = ConsoleColor.White;
+            Console.WriteLine("Order completed: {0}, corr id {1}", @event.GetType().Name, @event.CorrelationId);
             Console.ResetColor();
         }
         public string Name

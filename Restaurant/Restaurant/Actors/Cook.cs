@@ -14,7 +14,7 @@
 
         public Cook(string name)
         {
-            cookTime = Random.Next(5000);
+            cookTime = Random.Next(500);
             this.name = name;
         }
 

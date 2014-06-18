@@ -39,6 +39,7 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.ServiceModel" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -51,6 +52,8 @@
     <Compile Include="Actors\Cashier.cs" />
     <Compile Include="Actors\Cook.cs" />
     <Compile Include="Actors\SendToMeIn.cs" />
+    <Compile Include="Actors\TelephoneOperator.cs" />
+    <Compile Include="AtomPoller.cs" />
     <Compile Include="Commands\CookFood.cs" />
     <Compile Include="Commands\FirstCookRetry.cs" />
     <Compile Include="Commands\PriceOrder.cs" />
@@ -62,6 +65,7 @@
     <Compile Include="Events\FoodCooked.cs" />
     <Compile Include="Events\OrderEvent.cs" />
     <Compile Include="Events\OrderPlaced.cs" />
+    <Compile Include="Handlers\Dropper.cs" />
     <Compile Include="Handlers\ExceptionHandler.cs" />
     <Compile Include="Handlers\IOrderHandler.cs" />
     <Compile Include="Handlers\OrderPlacedHandler.cs" />
@@ -70,6 +74,7 @@
     <Compile Include="IMidget.cs" />
     <Compile Include="IStartable.cs" />
     <Compile Include="Line.cs" />
+    <Compile Include="DodgyOrderMidget.cs" />
     <Compile Include="OrderMidget.cs" />
     <Compile Include="MidgetHouse.cs" />
     <Compile Include="Monitor.cs" />

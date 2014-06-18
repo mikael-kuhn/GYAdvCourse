@@ -39,6 +39,18 @@ namespace Restaurant
             return innerInstance.ToString();
         }
 
+        public bool IsDodgy 
+        {
+            get
+            {
+                return innerInstance["isDodgy"] != null && bool.Parse(innerInstance["isDodgy"].ToString());
+            }
+            set
+            {
+                innerInstance["isDodgy"] = value.ToString();
+            }
+        }
+
         public string Id 
         {
             get
